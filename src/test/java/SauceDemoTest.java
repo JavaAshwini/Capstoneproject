@@ -8,17 +8,14 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 public class SauceDemoTest {
     WebDriver driver;
 
-    @BeforeMethod
-    public void setUp() {
-        // Set up WebDriver (you might want to specify the path to the chromedriver)
-        WebDriverManager.chromedriver().setup();
-//        System.setProperty("webdriver.chrome.driver", "path/to/chromedriver");
-        driver = new ChromeDriver();
-    }
+
 
     @BeforeSuite
     public void testLaunchAndVerifyTitle() {
         // Launch the URL
+        WebDriverManager.chromedriver().setup();
+//        System.setProperty("webdriver.chrome.driver", "path/to/chromedriver");
+        driver = new ChromeDriver();
         driver.get("https://www.saucedemo.com/");
 
         // Verify the title
@@ -92,7 +89,7 @@ public class SauceDemoTest {
         // Verify navigation (title should be "Swag Labs")
         String actualTitle = driver.getTitle();
         String expectedTitle = "Swag Labs";
-        Assert.assertEquals(actualTitle, expectedTitle, "User is not navigated to the correct page.");
+        Assert.assertEquals(actualTitle, expectedTitle, "Login failed");
     }
 
     @Test
@@ -115,10 +112,15 @@ public class SauceDemoTest {
         // Verify the page did not navigate to the right one
         String actualTitle = driver.getTitle();
         String expectedTitle = "Swag Labs";
-        Assert.assertNotEquals(actualTitle, expectedTitle, "User is incorrectly navigated to the right page.");
+        Assert.assertNotEquals(actualTitle, expectedTitle, "User is not navigated to the right page.");
+    }
+    @AfterMethod
+    public void captureScreenshotOnFailure() {
+        ScreenshotUtil.captureScreenshot(driver, "TestFailure");
     }
 
-    @AfterMethod
+
+    @AfterTest
     public void tearDown() {
         // Close the driver after each test
         if (driver != null) {
