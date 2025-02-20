@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="SauceDemo Suite">
+    <test name="SauceDemo Test">
+        <parameter name="username" value="standard_user"/>
+        <parameter name="password" value="secret_sauce"/>
+        <parameter name="invalidUsername" value="standard_Invaliduser"/>
+        <parameter name="invalidPassword" value="secret_Invalidpwd"/>
+
+        <classes>
+            <class name="SauceDemoTest"/>
+        </classes>
+    </test>
+</suite>
